@@ -22,10 +22,11 @@ from ..constants import (DRAG_DROP_ID,
                          IN_PORT, OUT_PORT,
                          VIEWER_GRID_LINES)
 from ..widgets.viewer import NodeViewer
-from ..widgets.node_space_bar import node_space_bar
+from ..widgets.node_space_bar import NodeSpaceBar
 
 
 class QWidgetDrops(QtWidgets.QWidget):
+
     def __init__(self):
         super(QWidgetDrops, self).__init__()
         self.setAcceptDrops(True)
@@ -158,7 +159,7 @@ class NodeGraph(QtCore.QObject):
         self._viewer.need_show_tab_search.connect(self._toggle_tab_search)
 
         self._wire_signals()
-        self._node_space_bar = node_space_bar(self)
+        self._node_space_bar = None
         self._auto_update = True
 
     def __repr__(self):
@@ -407,6 +408,7 @@ class NodeGraph(QtCore.QObject):
             layout.setContentsMargins(0, 0, 0, 0)
             layout.setSpacing(0)
             if self.root_node() is not None:
+                self._node_space_bar = NodeSpaceBar(self)
                 layout.addWidget(self._node_space_bar)
             layout.addWidget(self._viewer)
         return self._widget

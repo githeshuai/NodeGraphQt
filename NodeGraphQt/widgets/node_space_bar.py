@@ -2,9 +2,10 @@ from .. import QtWidgets, QtCore
 from . stylesheet import STYLE_SLASH_BUTTON, STYLE_NODE_BUTTON
 
 
-class node_space_bar(QtWidgets.QWidget):
+class NodeSpaceBar(QtWidgets.QWidget):
+
     def __init__(self, graph):
-        super(node_space_bar, self).__init__()
+        super(NodeSpaceBar, self).__init__()
         self.setMaximumHeight(20)
         self._layout = QtWidgets.QHBoxLayout(self)
         self._layout.setContentsMargins(0, 0, 0, 0)
@@ -16,7 +17,7 @@ class node_space_bar(QtWidgets.QWidget):
         self.set_node(self.graph.get_node_space())
 
     def add_slash(self):
-        btn_slash = QtWidgets.QPushButton("/")
+        btn_slash = QtWidgets.QPushButton('/')
         btn_slash.setFixedWidth(7)
         btn_slash.setStyleSheet(STYLE_SLASH_BUTTON)
         btn_slash.setFixedHeight(20)
