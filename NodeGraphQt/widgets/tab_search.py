@@ -113,7 +113,7 @@ class TabSearchWidget(QtWidgets.QLineEdit):
         self._completer.setModel(self._model)
 
 
-def fuzzyFinder(key, collection):
+def fuzzy_finder(key, collection):
     suggestions = []
     pattern = '.*?'.join(key.lower())
     regex = re.compile(pattern)
@@ -126,6 +126,7 @@ def fuzzyFinder(key, collection):
 
 
 class TabSearchMenuWidget(QtWidgets.QMenu):
+
     search_submitted = QtCore.Signal(str)
 
     def __init__(self, node_dict=None):
@@ -171,7 +172,7 @@ class TabSearchMenuWidget(QtWidgets.QMenu):
 
         self._set_menu_visible(False)
 
-        action_names = fuzzyFinder(text, self._actions.keys())
+        action_names = fuzzy_finder(text, self._actions.keys())
 
         self._searched_actions = [self._actions[name] for name in action_names]
         self.addActions(self._searched_actions)

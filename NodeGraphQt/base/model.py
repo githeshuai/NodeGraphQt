@@ -219,9 +219,23 @@ class NodeModel(object):
                     'disabled': False,
                     'visible': True,
                     'inputs': {
-                        <port_name>: {<node_id>: [<port_name>, <port_name>]}},
+                        <port_name>: {<node_id>: [
+                            {
+                                'name', <port_name>,
+                                'display_name', <port_display_name>,
+                                'multi_connection', False,
+                                'data_type': <data_type>
+                            }
+                        ]}},
                     'outputs': {
-                        <port_name>: {<node_id>: [<port_name>, <port_name>]}},
+                        <port_name>: {<node_id>: [
+                            {
+                                'name', <port_name>,
+                                'display_name', <port_display_name>,
+                                'multi_connection', False,
+                                'data_type': <data_type>
+                            }
+                        ]}},
                     'input_ports': [<port_name>, <port_name>],
                     'output_ports': [<port_name>, <port_name>],
                     'width': 0.0,
@@ -240,15 +254,19 @@ class NodeModel(object):
         output_ports = []
         for name, model in node_dict.pop('inputs').items():
             if self.dynamic_port:
-                input_ports.append({'name': name, 'multi_connection': model.multi_connection,
-                                    'display_name': model.display_name, 'data_type': model.data_type})
+                input_ports.append({'name': name,
+                                    'display_name': model.display_name,
+                                    'multi_connection': model.multi_connection,
+                                    'data_type': model.data_type})
             connected_ports = model.to_dict['connected_ports']
             if connected_ports:
                 inputs[name] = connected_ports
         for name, model in node_dict.pop('outputs').items():
             if self.dynamic_port:
-                output_ports.append({'name': name, 'multi_connection': model.multi_connection,
-                                     'display_name': model.display_name, 'data_type': model.data_type})
+                output_ports.append({'name': name,
+                                     'display_name': model.display_name,
+                                     'multi_connection': model.multi_connection,
+                                     'data_type': model.data_type})
             connected_ports = model.to_dict['connected_ports']
             if connected_ports:
                 outputs[name] = connected_ports
