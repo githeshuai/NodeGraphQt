@@ -1488,7 +1488,7 @@ class NodeGraph(QtCore.QObject):
         Returns:
             bool: true if user clicked yes.
         """
-        self._viewer.question_dialog(text, title)
+        return self._viewer.question_dialog(text, title)
 
     def message_dialog(self, text, title='Node Graph'):
         """
