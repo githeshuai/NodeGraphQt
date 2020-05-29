@@ -17,7 +17,8 @@ from ..constants import (NODE_PROP_QLABEL,
                          NODE_PROP_VECTOR4,
                          NODE_PROP_FLOAT,
                          NODE_PROP_INT,
-                         NODE_PROP_BUTTON)
+                         NODE_PROP_BUTTON,
+                         NODE_PROP_ICON)
 from .file_dialog import file_dialog
 
 
@@ -731,7 +732,8 @@ WIDGET_MAP = {
     NODE_PROP_VECTOR4: PropVector4,
     NODE_PROP_FLOAT: PropFloat,
     NODE_PROP_INT: PropInt,
-    NODE_PROP_BUTTON: PropButton
+    NODE_PROP_BUTTON: PropButton,
+    NODE_PROP_ICON: PropLineEdit,
 }
 
 

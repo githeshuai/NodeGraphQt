@@ -271,6 +271,7 @@ class NodeObject(object):
             - :attr:`NodeGraphQt.constants.NODE_PROP_FLOAT`
             - :attr:`NodeGraphQt.constants.NODE_PROP_INT`
             - :attr:`NodeGraphQt.constants.NODE_PROP_BUTTON`
+            - :attr:`NodeGraphQt.constants.NODE_PROP_ICON`
 
         See Also:
             :class:`NodeGraphQt.PropertiesBinWidget`

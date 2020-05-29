@@ -26,10 +26,11 @@ class MoreIconNode(BaseNode):
     def __init__(self):
         super(MoreIconNode, self).__init__()
         self._input_port = self.add_input("image_path", display_name=False)
-        self.add_icon_label('more_icon', icon_path=r"", tab='widgets')
+        self.add_icon_label('icon path', icon_path=r"", tab='widgets')
 
     def set_pixmap(self, icon_path):
-        self.get_widget("more_icon").value = icon_path
+        self.get_widget("icon path").value = icon_path
+        self.set_property("icon path", icon_path)
 
     def run(self):
         input_node = self._input_port.connected_ports()[0].node()
@@ -41,6 +42,9 @@ class MoreIconNode(BaseNode):
 
     def on_input_connected(self, to_port, from_port):
         self.run()
+
+    def on_input_disconnected(self, in_port, out_port):
+        self.set_pixmap("")
 
 
 class MoreTextNode(BaseNode):
@@ -55,6 +59,21 @@ class MoreTextNode(BaseNode):
         super(MoreTextNode, self).__init__()
         self.add_output('out')
         self.add_text_input('out', 'More Text', text='', tab='widgets', multi_line=True)
+        self.get_widget("out").value_changed.connect(self.update_stream)
+
+
+class MoreBrowserFileNode(BaseNode):
+    """
+    More user node
+    """
+
+    __identifier__ = 'More'
+    NODE_NAME = 'Browser File'
+
+    def __init__(self):
+        super(MoreBrowserFileNode, self).__init__()
+        self.add_output('out')
+        self.add_file_input('out', 'Browser File', text='', tab='widgets')
         self.get_widget("out").value_changed.connect(self.update_stream)
 
 
