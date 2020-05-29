@@ -341,11 +341,19 @@ class NodeItem(AbstractNodeItem):
         in_count = len([p for p in self.inputs if p.isVisible()])
         out_count = len([p for p in self.outputs if p.isVisible()])
         height += port_height * max([in_count, out_count])
+
         if self._widgets:
+            widgets = list(self._widgets.values())
             wid_height = 0.0
-            for w in self._widgets.values():
+            for w in widgets:
                 wid_height += w.boundingRect().height()
-            wid_height += wid_height / len(self._widgets.values())
+            # #################################################################################
+            # debug by Mr.he
+            if len(widgets) == 1 and widgets[0].type_ == "IconNodeWidget":
+                pass
+            # #################################################################################
+            else:
+                wid_height += wid_height / len(self._widgets.values())
             if wid_height > height:
                 height = wid_height
 

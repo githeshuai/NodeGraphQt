@@ -3,7 +3,7 @@ from .file_dialog import file_dialog
 from .properties import _ValueEdit
 from .stylesheet import *
 
-from .. import QtCore, QtWidgets
+from .. import QtCore, QtWidgets, QtGui
 from ..constants import Z_VAL_NODE_WIDGET
 
 
@@ -217,6 +217,74 @@ class NodeComboBox(NodeBaseWidget):
 
     def clear(self):
         self._combo.clear()
+
+
+class NodeIcon(NodeBaseWidget):
+    """
+    NodeLineEdit widget is subclassed from :class:`NodeBaseWidget`,
+    this widget is displayed as a ``QLabel`` with pixmap embedded in a node.
+    """
+    def __init__(self, parent=None, name="", label="", icon_path=""):
+        super(NodeIcon, self).__init__(parent, name, label)
+
+        self._icon_path = icon_path
+        self._q_label = QtWidgets.QLabel()
+        self._q_label.setFixedSize(200, 200)
+        self._set_pixmap()
+        group = _NodeGroupBox(label)
+        group.setSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        group.add_node_widget(self._q_label)
+        self.setWidget(group)
+
+    @staticmethod
+    def _resize_pixmap_to_label(pixmap, label):
+        """
+        :param pixmap: QPixmap
+        :param label: QLabel
+        :return:
+        """
+        label_width = label.width()
+        label_height = label.height()
+        image_width = pixmap.width()
+        image_height = pixmap.height()
+        if image_width > image_height:
+            scaled = pixmap.scaled(QtCore.QSize(label_width, image_width / label_width * image_height),
+                                   QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
+        elif image_width < image_height:
+            scaled = pixmap.scaled(QtCore.QSize(image_height / label_height * image_width, label_height),
+                                   QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
+        else:
+            scaled = pixmap.scaled(QtCore.QSize(label_width, label_height),
+                                   QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
+        return scaled
+
+    def _set_pixmap(self):
+        pix_map = QtGui.QPixmap(self._icon_path)
+        pix_map = self._resize_pixmap_to_label(pix_map, self._q_label)
+        self._q_label.setPixmap(pix_map)
+
+    @property
+    def type_(self):
+        return "IconNodeWidget"
+
+    @property
+    def widget(self):
+        return self._q_label
+
+    @property
+    def value(self):
+        """
+        Returns the widgets current text.
+
+        Returns:
+            str: current text.
+        """
+        return self._icon_path
+
+    @value.setter
+    def value(self, text=''):
+        self._icon_path = text
+        self._set_pixmap()
 
 
 class NodeLineEdit(NodeBaseWidget):

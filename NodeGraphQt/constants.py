@@ -85,6 +85,8 @@ NODE_PROP_FLOAT = 15
 NODE_PROP_INT = 16
 #: Property type represented with button widget in the properties bin.
 NODE_PROP_BUTTON = 17
+#: Property type represented with icon label in the properties bin.
+NODE_PROP_ICON = 18
 
 # === NODE VIEWER ===
 

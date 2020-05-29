@@ -30,15 +30,15 @@ if __name__ == '__main__':
         if not properties_bin.isVisible():
             properties_bin.show()
     graph.node_double_clicked.connect(show_prop_bin)
-
-    # show the nodes list when a node is "double clicked" in the graph.
-    node_tree = NodeTreeWidget(node_graph=graph)
-
-    def show_nodes_list(node):
-        if not node_tree.isVisible():
-            node_tree.update()
-            node_tree.show()
-    graph.node_double_clicked.connect(show_nodes_list)
+    #
+    # # show the nodes list when a node is "double clicked" in the graph.
+    # node_tree = NodeTreeWidget(node_graph=graph)
+    #
+    # def show_nodes_list(node):
+    #     if not node_tree.isVisible():
+    #         node_tree.update()
+    #         node_tree.show()
+    # graph.node_double_clicked.connect(show_nodes_list)
 
     # registered nodes.
     [graph.register_node(n) for n in Nodes]

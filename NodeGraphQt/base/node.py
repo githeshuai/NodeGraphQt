@@ -10,6 +10,7 @@ from ..constants import (NODE_PROP,
                          NODE_PROP_FILE,
                          NODE_PROP_FLOAT,
                          NODE_PROP_INT,
+                         NODE_PROP_ICON,
                          IN_PORT, OUT_PORT,
                          NODE_LAYOUT_VERTICAL,
                          NODE_LAYOUT_HORIZONTAL,
@@ -22,7 +23,8 @@ from ..widgets.node_widgets import (NodeComboBox,
                                     NodeFloatEdit,
                                     NodeIntEdit,
                                     NodeCheckBox,
-                                    NodeFilePath)
+                                    NodeFilePath,
+                                    NodeIcon)
 from .utils import update_node_down_stream
 
 
@@ -645,6 +647,26 @@ class BaseNode(NodeObject):
         widget.value_changed.connect(lambda k, v: self.set_property(k, v))
         self.view.add_widget(widget)
 
+    def add_icon_label(self, name, label="", icon_path="", tab=None):
+        """
+        Creates a custom property with the :meth:`NodeObject.create_property`
+        function and embeds a :class:`PySide2.QtWidgets.QLabel` widget
+        into the node.
+
+        Note:
+            The embedded widget is wired up to the :meth:`NodeObject.set_property`
+            function use this function to to update the widget.
+
+        Args:
+            name (str): name for the custom property.
+            label (str): label to be displayed.
+            icon_path (str): icon path to show in label pixmap
+            tab (str): name of the widget tab to display in.
+        """
+        self.create_property(name, icon_path, widget_type=NODE_PROP_ICON, tab=tab)
+        widget = NodeIcon(self.view, name, label, icon_path)
+        self.view.add_widget(widget)
+
     def add_text_input(self, name, label='', text='', tab=None, multi_line=False):
         """
         Creates a custom property with the :meth:`NodeObject.create_property`
@@ -664,8 +686,7 @@ class BaseNode(NodeObject):
         """
         wid_type = NODE_PROP_QTEXTEDIT if multi_line else NODE_PROP_QLINEEDIT
 
-        self.create_property(
-            name, text, widget_type=wid_type, tab=tab)
+        self.create_property(name, text, widget_type=wid_type, tab=tab)
         widget = NodeLineEdit(self.view, name, label, text)
         widget.value_changed.connect(lambda k, v: self.set_property(k, v))
         self.view.add_widget(widget)
